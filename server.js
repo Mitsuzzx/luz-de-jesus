@@ -29,13 +29,14 @@ app.get('/doacao/:valor', (req, res) => {
 const {
   SHARPIFY_CLIENT_ID = '',
   SHARPIFY_CLIENT_SECRET = '',
-  SHARPIFY_BASE = 'https://sharpify-pay.com',
+  SHARPIFY_BASE_RAW = '',
   WEBHOOK_URL = '',
   ADMIN_PASSWORD = 'jesus123',
   META_PIXEL_ID = '',
   META_CAPI_TOKEN = '',
   PORT = 3000
 } = process.env;
+const SHARPIFY_BASE = (process.env.SHARPIFY_BASE || '').trim() || 'https://sharpify-pay.com';
 
 const causaLabel = (c) => c === 'animais' ? 'Animais - Patas Protegidas'
   : c === 'necessitados' ? 'Necessitados - Prato Cheio' : 'Necessitados + Animais';

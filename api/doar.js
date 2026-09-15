@@ -9,7 +9,8 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
-  const { SHARPIFY_CLIENT_ID = '', SHARPIFY_CLIENT_SECRET = '', SHARPIFY_BASE = 'https://sharpify-pay.com', WEBHOOK_URL = '' } = process.env;
+  const { SHARPIFY_CLIENT_ID = '', SHARPIFY_CLIENT_SECRET = '', WEBHOOK_URL = '' } = process.env;
+  const SHARPIFY_BASE = (process.env.SHARPIFY_BASE || '').trim() || 'https://sharpify-pay.com';
   try {
     const { amount, causa = 'ambos', nome = '', email = '', visitorId = '', fbp = '', fbc = '' } = req.body || {};
     const utm = {

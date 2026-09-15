@@ -7,7 +7,8 @@ export default async function handler(req, res) {
   const id = req.query.id;
   if (!id) return res.status(400).json({ error: 'id required' });
   if (String(id).startsWith('demo_')) return res.json({ status: 'PENDING', demo: true });
-  const { SHARPIFY_CLIENT_ID = '', SHARPIFY_CLIENT_SECRET = '', SHARPIFY_BASE = 'https://sharpify-pay.com' } = process.env;
+  const { SHARPIFY_CLIENT_ID = '', SHARPIFY_CLIENT_SECRET = '' } = process.env;
+  const SHARPIFY_BASE = (process.env.SHARPIFY_BASE || '').trim() || 'https://sharpify-pay.com';
   try {
     const r = await fetch(`${SHARPIFY_BASE}/api/v1/gateway/payment/get-payment?paymentLinkId=${encodeURIComponent(id)}`, {
       headers: { 'x-sharpify-client-id': SHARPIFY_CLIENT_ID, 'x-sharpify-client-secret': SHARPIFY_CLIENT_SECRET }
