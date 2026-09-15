@@ -109,11 +109,7 @@ $$('.tabs button').forEach(t => {
   };
 });
 $$('.pick').forEach(b => {
-  b.onclick = () => {
-    causa = b.dataset.c;
-    $$('.tabs button').forEach(x => x.classList.toggle('on', x.dataset.t === causa));
-    document.querySelector('#doar').scrollIntoView({ behavior: 'smooth' }); update();
-  };
+  b.onclick = () => { location.href = `/doacao/20?causa=${b.dataset.c}`; };
 });
 $$('.vals button').forEach(b => {
   b.onclick = () => {
@@ -151,98 +147,16 @@ function update() {
 }
 function toast(m) { const t = $('#toast'); t.textContent = m; t.hidden = false; setTimeout(() => t.hidden = true, 2800); }
 
-/* ---------- CHECKOUT GRANDE ---------- */
-const co = $('#checkout');
-function openCheckout() {
+/* ---------- CHECKOUT (página dedicada estilo Kiwify: /doacao/30) ---------- */
+function goCheckout() {
   valor = parseFloat($('#valor').value) || 0;
   if (valor < MIN) { $('#err').hidden = false; toast('Ops! Mínimo R$ 2,00 💛'); return; }
-  $('#coStep1').hidden = false; $('#coStep2').hidden = true;
-  $('#coNome').value = $('#nome')?.value || '';
-  $('#coEmail').value = $('#email')?.value || '';
-  paintCo();
-  co.hidden = false;
-  document.body.style.overflow = 'hidden';
+  if (typeof fbq === 'function') { try { fbq('track', 'InitiateCheckout', { value: valor, currency: 'BRL' }); } catch {} }
+  const v = valor % 1 === 0 ? String(valor) : valor.toFixed(2);
+  location.href = `/doacao/${v}?causa=${causa}`;
 }
-function paintCo() {
-  $('#coAmountBig').textContent = fmt(valor);
-  $('#coCauseLine').textContent = causaNome(causa);
-  $('#coTitle').textContent = causa === 'animais' ? 'Sua doação 🐾' : causa === 'necessitados' ? 'Sua doação 🍞' : 'Sua doação 💛';
-  $('#coImpact').textContent = `💛 Com ${fmt(valor)} você garante ${impactoTxt(valor, causa)}!`;
-}
-function closeCheckout() { co.hidden = true; document.body.style.overflow = ''; if (window._poll) clearInterval(window._poll); }
 
-$('#form').addEventListener('submit', e => {
-  e.preventDefault(); openCheckout();
-  if (typeof fbq === 'function') { try { fbq('track', 'InitiateCheckout', { value: parseFloat($('#valor').value) || 0, currency: 'BRL' }); } catch {} }
-});
-$('#coX').onclick = closeCheckout;
-co.addEventListener('click', e => { if (e.target === co) closeCheckout(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !co.hidden) closeCheckout(); });
-$('#coEdit').onclick = () => { closeCheckout(); document.querySelector('#doar').scrollIntoView({ behavior: 'smooth' }); };
-$('#coBack').onclick = () => { $('#coStep2').hidden = true; $('#coStep1').hidden = false; if (window._poll) clearInterval(window._poll); };
-
-$('#coGen').onclick = async () => {
-  valor = parseFloat($('#valor').value) || 0;
-  const nome = $('#coNome').value.trim(), email = $('#coEmail').value.trim();
-  if ($('#nome')) $('#nome').value = nome;
-  if ($('#email')) $('#email').value = email;
-  $('#coStep1').hidden = true; $('#coStep2').hidden = false;
-  $('#coResumo').textContent = `${fmt(valor)} • ${causaNome(causa)}${nome ? ' • ' + nome : ''}`;
-  $('#coSpin').style.display = 'block'; $('#coQr').style.display = 'none';
-  $('#coCode').textContent = 'gerando...'; $('#coLink').hidden = true; $('#coOk').hidden = true;
-  $('#coStatus').textContent = '⏳ Gerando seu PIX...';
-  try {
-    const r = await fetch('/api/doar', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: valor, causa, nome: nome || 'Anônimo', email, visitorId: window._vid, fbp: getCookie('_fbp'), fbc: getCookie('_fbc'), ...window._utm }) });
-    if (!r.ok) throw 0;
-    const d = await r.json();
-    window._eid = d.eventId || null;
-    showPay(d);
-    if (d.id && !d.demo) poll(d.id);
-    loadStats();
-  } catch {
-    const demo = `PIX LuzDeJesus ${causa} ${valor.toFixed(2)}`;
-    showPay({ qrCode: `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(demo)}`, code: demo, demo: true });
-    $('#coStatus').textContent = '🧪 Demonstração — conecte o backend p/ PIX real.';
-  }
-};
-function showPay(d) {
-  $('#coSpin').style.display = 'none';
-  const img = $('#coQr'); img.src = d.qrCode || ''; img.style.display = 'block';
-  $('#coCode').textContent = d.code || '—';
-  if (d.paymentLink) { const l = $('#coLink'); l.href = d.paymentLink; l.hidden = false; }
-  if (!d.demo) $('#coStatus').textContent = '⏳ Aguardando pagamento... pague no app do banco 📱';
-}
-async function statusOf(id) {
-  try {
-    let r = await fetch(`/api/status?id=${encodeURIComponent(id)}`);
-    if (r.ok) { const j = await r.json(); if (j.status) return j.status; }
-  } catch {}
-  try {
-    const r2 = await fetch(`/api/status/${encodeURIComponent(id)}`);
-    if (r2.ok) return (await r2.json()).status;
-  } catch {}
-  return 'PENDING';
-}
-function poll(id) {
-  let n = 0;
-  window._poll = setInterval(async () => {
-    if (++n > 60) { clearInterval(window._poll); return; }
-    const st = await statusOf(id);
-    if (st === 'APPROVED') {
-      clearInterval(window._poll);
-      $('#coStatus').textContent = '✅ Recebido!';
-      $('#coOk').hidden = false;
-      toast('✅ Doação recebida! Deus te abençoe 🙏');
-      hearts(26);
-      if (typeof fbq === 'function') { try { fbq('track', 'Purchase', { value: valor, currency: 'BRL' }, { eventID: window._eid || undefined }); } catch {} }
-      loadStats();
-    }
-  }, 5000);
-}
-$('#coCopy').onclick = async () => {
-  try { await navigator.clipboard.writeText($('#coCode').textContent); toast('📋 Código copiado! Cola no app do banco 💛'); }
-  catch { toast('Selecione o código e copie manualmente'); }
-};
+$('#form').addEventListener('submit', e => { e.preventDefault(); goCheckout(); });
 
 /* ---------- chuva de corações 💛 ---------- */
 function hearts(n = 14) {
@@ -261,10 +175,8 @@ function hearts(n = 14) {
     setTimeout(() => s.remove(), 5200);
   }
 }
-// coraçõezinhos ao escolher valor / gerar PIX
+// coraçõezinhos ao escolher valor
 $$('.vals button').forEach(b => b.addEventListener('click', () => hearts(6)));
-const _coGen = $('#coGen');
-if (_coGen) _coGen.addEventListener('click', () => setTimeout(() => hearts(10), 400));
 
 /* ---------- FEED AO VIVO + COMPARTILHAR + CTA FIXO ---------- */
 function timeAgo(iso) {
@@ -309,10 +221,6 @@ if ($('#shareCopy')) $('#shareCopy').onclick = async () => {
   try { await navigator.clipboard.writeText(siteUrl()); toast('🔗 Link copiado! Espalhe o amor 💛'); }
   catch { toast('Copie o endereço da página'); }
 };
-if ($('#coShare')) $('#coShare').onclick = () => {
-  window.open(`https://wa.me/?text=${encodeURIComponent('Acabei de doar 🙏 Junte-se a mim e ajude também! ')}${encodeURIComponent(siteUrl())}`, '_blank');
-};
-
 /* ---------- POPUP PROVA SOCIAL (só com doações reais) ---------- */
 let _proofIdx = 0, _proofTimer = null;
 async function proofLoop() {
@@ -324,7 +232,7 @@ async function proofLoop() {
     const d = donations[_proofIdx % donations.length];
     _proofIdx++;
     const pop = $('#proofPop');
-    if (!pop || !$('#checkout').hidden) { scheduleProof(); return; } // não atrapalha o checkout
+    if (!pop) return;
     $('#proofAv').textContent = (d.nome || '?')[0].toUpperCase();
     $('#proofTxt').innerHTML = `<b>${d.nome}</b> doou <b>${fmt(d.amount)}</b> ${causaEmoji(d.causa)}<small>${timeAgo(d.createdAt)} • verificada ✅</small>`;
     pop.hidden = false;

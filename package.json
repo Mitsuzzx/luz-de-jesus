@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "build": "terser public/script.js --compress --mangle --output public/script.min.js && echo minificado OK"
+    "build": "terser public/script.js --compress --mangle --output public/script.min.js && terser public/checkout.js --compress --mangle --output public/checkout.min.js && echo minificado OK"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.116.0",

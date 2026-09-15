@@ -17,8 +17,10 @@ app.use(cors());
 app.use(express.json());
 // 🔒 Só arquivos PÚBLICOS são servidos. Backend (server.js, /api, /lib, .env)
 // nunca é exposto — nem pelo Sources do F12, nem por URL direta.
-const PUBLIC_FILES = ['index.html', 'style.css', 'script.js', 'script.min.js', 'admin.html'];
+const PUBLIC_FILES = ['index.html', 'style.css', 'script.js', 'script.min.js', 'admin.html', 'checkout.html', 'checkout.js', 'checkout.min.js'];
 PUBLIC_FILES.forEach(f => app.get('/' + f, (req, res) => res.sendFile(path.join(__dirname, 'public', f))));
+// Checkout dedicado estilo Kiwify: /doacao/30?causa=animais
+app.get('/doacao/:valor', (req, res) => res.sendFile(path.join(__dirname, 'public', 'checkout.html')));
 
 const {
   SHARPIFY_CLIENT_ID = '',

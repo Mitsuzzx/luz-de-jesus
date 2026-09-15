@@ -151,7 +151,6 @@
       <p class="rec-hint">✨ <b>R$20</b> é o queridinho — não pesa e ajuda a todos 🍞🐾</p>
       <div class="field cute-field"><span>R$</span><input id="valor" type="number" min="2" step="0.01" value="20"></div>
       <p id="err" class="err" hidden>Ops! Mínimo R$ 2,00 💛</p>
-      <div class="two"><input id="nome" placeholder="Seu nome (opcional) 💌"><input id="email" type="email" placeholder="E-mail (opcional) ✉️"></div>
       <div id="impact" class="impact cute-impact">💛 Com <b>R$20</b> → <b>10 marmitas</b></div>
       <button class="btn-gold lg full shine pulse-btn cute-btn" id="btnDoar">Doar R$20,00 agora 💛</button>
       <p class="micro">🔒 PIX seguro • aprova na horinha ⚡</p>
@@ -214,55 +213,6 @@
 
 <footer><div class="wrap foot">© 2026 Luz de Jesus • Feito com fé ✝ e amor <span class="heart-beat">💛</span> • <a href="/admin" class="adm-link">adm</a></div></footer>
 
-<!-- CHECKOUT GRANDE -->
-<div id="checkout" class="checkout" hidden>
-  <div class="co-box">
-    <button id="coX" class="x" aria-label="fechar">✕</button>
-
-    <!-- ETAPA 1: dados -->
-    <div id="coStep1" class="co-grid">
-      <div class="co-left">
-        <p class="kick">✨ FINALIZAR DOAÇÃO</p>
-        <h3 id="coTitle">Sua doação 💛</h3>
-        <p class="dim" id="coCauseLine">🍞 Pessoas</p>
-        <div class="co-amount"><span id="coAmountBig">R$20,00</span><button type="button" id="coEdit">trocar valor</button></div>
-        <label class="co-lbl">Seu nome <span>(opcional)</span></label>
-        <input id="coNome" placeholder="Ex: Maria 💌" maxlength="60">
-        <label class="co-lbl">Seu e-mail <span>(opcional, p/ comprovante)</span></label>
-        <input id="coEmail" type="email" placeholder="voce@email.com ✉️" maxlength="80">
-        <button class="btn-gold lg full shine pulse-btn" id="coGen">Gerar PIX ⚡</button>
-        <p class="micro">🔒 Seguro • sem cadastro • mínimo R$2</p>
-      </div>
-      <div class="co-right cute-side">
-        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=70&auto=format&fit=crop" alt="">
-        <div class="co-impact" id="coImpact">💛 Com R$20 você garante 2 cestas básicas!</div>
-        <p class="co-verse">“Deus ama ao que dá com alegria.”<small>2 Cor 9:7</small></p>
-      </div>
-    </div>
-
-    <!-- ETAPA 2: pagamento -->
-    <div id="coStep2" class="co-grid" hidden>
-      <div class="co-left center">
-        <p class="kick">🙏 QUASE LÁ!</p>
-        <h3>Escaneie o PIX</h3>
-        <p class="dim" id="coResumo"></p>
-        <div class="qr big"><img id="coQr"><div id="coSpin" class="spin"></div></div>
-        <p class="st" id="coStatus">⏳ Gerando seu PIX...</p>
-      </div>
-      <div class="co-right">
-        <label class="co-lbl">Copia e cola 👇</label>
-        <div class="code big"><code id="coCode">gerando...</code></div>
-        <div class="co-btns">
-          <button id="coCopy" class="btn-gold full">📋 Copiar código</button>
-          <a id="coLink" href="#" target="_blank" rel="noopener" class="btn-line full center" hidden>Abrir link de pagamento ↗</a>
-          <button id="coBack" class="btn-line full">← voltar</button>
-        </div>
-        <div class="co-ok" id="coOk" hidden>✅ <b>Pagamento recebido!</b><br>Deus te abençoe imensamente 🙏💛<br><button id="coShare" class="share-btn wa" type="button" style="margin-top:10px">📣 Compartilhar e inspirar</button></div>
-      </div>
-    </div>
-
-  </div>
-</div>
 <div id="proofPop" class="proof" hidden>
   <span class="feed-av" id="proofAv">M</span>
   <p id="proofTxt"><b>—</b></p>

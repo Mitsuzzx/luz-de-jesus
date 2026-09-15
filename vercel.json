@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/doacao/:valor", "destination": "/checkout.html" },
     { "source": "/api/status/:id", "destination": "/api/status?id=:id" }
   ],
   "headers": [
