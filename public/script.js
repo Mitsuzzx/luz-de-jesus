@@ -105,25 +105,13 @@ if (document.querySelector('.t3')) io2.observe(document.querySelector('.t3'));
 $$('.tabs button').forEach(t => {
   t.onclick = () => {
     $$('.tabs button').forEach(x => x.classList.remove('on'));
-    t.classList.add('on'); causa = t.dataset.t; update();
+    t.classList.add('on'); causa = t.dataset.t;
   };
 });
 $$('.pick').forEach(b => {
-  b.onclick = () => { location.href = `/checkout.html?valor=20&causa=${b.dataset.c}`; };
+  b.onclick = () => { location.href = `/checkout-20?causa=${b.dataset.c}`; };
 });
-$$('.vals button').forEach(b => {
-  b.onclick = () => {
-    $$('.vals button').forEach(x => x.classList.remove('on'));
-    b.classList.add('on'); valor = parseFloat(b.dataset.v);
-    $('#valor').value = valor; update();
-  };
-});
-$('#valor').addEventListener('input', e => {
-  valor = parseFloat(e.target.value) || 0;
-  $$('.vals button').forEach(x => x.classList.toggle('on', parseFloat(x.dataset.v) === valor));
-  update();
-});
-
+/* causas + valores ficam no checkout */
 function causaNome(c) { return c === 'animais' ? '🐾 Animais' : c === 'necessitados' ? '🍞 Pessoas' : '💛 Ambos'; }
 function impactoTxt(v, c) {
   if (c === 'animais') {
@@ -149,12 +137,9 @@ function toast(m) { const t = $('#toast'); t.textContent = m; t.hidden = false; 
 
 /* ---------- CHECKOUT (página dedicada estilo Kiwify: /doacao/30) ---------- */
 function goCheckout() {
-  valor = parseFloat($('#valor').value) || 0;
-  if (valor < MIN) { $('#err').hidden = false; toast('Ops! Mínimo R$ 2,00 💛'); return; }
-  if (typeof fbq === 'function') { try { fbq('track', 'InitiateCheckout', { value: valor, currency: 'BRL' }); } catch {} }
-  const v = valor % 1 === 0 ? String(valor) : valor.toFixed(2);
-  // checkout dedicado (página que abre de verdade no ar)
-  location.href = `/checkout.html?valor=${v}&causa=${causa}`;
+  if (typeof fbq === 'function') { try { fbq('track', 'InitiateCheckout', { currency: 'BRL' }); } catch {} }
+  hearts(8);
+  location.href = '/checkout?causa=' + causa;
 }
 
 $('#form').addEventListener('submit', e => { e.preventDefault(); goCheckout(); });
@@ -176,9 +161,6 @@ function hearts(n = 14) {
     setTimeout(() => s.remove(), 5200);
   }
 }
-// coraçõezinhos ao escolher valor
-$$('.vals button').forEach(b => b.addEventListener('click', () => hearts(6)));
-
 /* ---------- FEED AO VIVO + COMPARTILHAR + CTA FIXO ---------- */
 function timeAgo(iso) {
   const s = Math.floor((Date.now() - new Date(iso)) / 1000);

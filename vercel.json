@@ -3,6 +3,7 @@
   "cleanUrls": true,
   "routes": [
     { "src": "^/doacao/[^/]+/?$", "dest": "/checkout.html" },
+    { "src": "^/checkout-([^/]+)/?$", "dest": "/checkout.html?valor=$1" },
     { "src": "^/admin/?$", "dest": "/admin.html" },
     { "src": "^/api/status/([^/]+)/?$", "dest": "/api/status?id=$1" },
     { "handle": "filesystem" }

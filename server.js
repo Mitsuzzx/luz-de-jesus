@@ -25,6 +25,13 @@ app.get('/doacao/:valor', (req, res) => {
     if (err) res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
   });
 });
+// Rotas bonitas estilo Kiwify: /checkout-20 (página física; fallback p/ checkout)
+app.get('/checkout', (req, res) => res.sendFile(path.join(__dirname, 'public', 'checkout.html')));
+app.get('/checkout-:valor', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'checkout-' + req.params.valor, 'index.html'), (err) => {
+    if (err) res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
+  });
+});
 
 const {
   SHARPIFY_CLIENT_ID = '',

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar doação — Luz de Jesus 💛</title>
+<meta name="description" content="Checkout seguro via PIX. Doe em segundos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✝️</text></svg>">
+<style>
+:root{--ink:#1c1a14;--mut:#7a7568;--line:#e8e0cc;--bg:#f4f1ea;--card:#ffffff;--gold:#b98a17;--green:#16a34a;--green-d:#15803d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+.topbar{background:#111;color:#fff;text-align:center;padding:12px 16px;font-size:13px;font-weight:600}
+.topbar b{color:#ffe08a}
+.wrap{max-width:480px;margin:0 auto;padding:22px 16px 60px}
+.brand{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0 16px}
+.brand .ic{width:40px;height:40px;border-radius:12px;background:linear-gradient(180deg,#ffe9a8,#dd9f22);display:grid;place-items:center;font-size:22px}
+.brand b{font-size:17px}.brand small{display:block;font-size:11px;color:var(--mut);font-weight:500}
+.steps{display:flex;gap:8px;margin-bottom:16px}
+.steps div{flex:1;text-align:center;font-size:12px;font-weight:700;color:var(--mut);padding:9px;border-radius:12px;background:#e9e2cf}
+.steps div.on{background:#1c1a14;color:#ffe08a}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 10px 30px rgba(60,50,20,.08)}
+.prod{display:flex;gap:14px;align-items:center}
+.prod .em-img{width:60px;height:60px;border-radius:16px;object-fit:cover;flex-shrink:0;border:1.5px solid var(--line);box-shadow:0 4px 14px rgba(60,50,20,.15)}
+.prod b{font-size:16px}.prod small{color:var(--mut);font-size:12.5px}
+.price{display:flex;align-items:baseline;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.price span{font-size:13px;color:var(--mut);font-weight:600}
+.price b{font-size:30px}
+.impact{background:#fdf6dd;border:1px solid #e8b93c;border-radius:14px;padding:12px;font-size:13.5px;margin-top:12px;text-align:center}
+.causas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+.causas button{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:11px 4px;font-weight:700;font-size:13px;cursor:pointer;transition:.2s}
+.causas button.on{background:#1c1a14;color:#ffe08a;border-color:#1c1a14}
+label.lbl{display:block;font-size:12px;font-weight:800;letter-spacing:.4px;color:var(--mut);margin:12px 0 6px}
+input.inp{width:100%;border:1.5px solid var(--line);border-radius:14px;padding:14px;font-size:15px;outline:none;transition:.2s;background:#fff;color:var(--ink)}
+input.inp:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,185,60,.18)}
+.valrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.valrow button{flex:1;min-width:70px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:11px;font-weight:800;cursor:pointer;font-size:14px}
+.valrow button.on{background:#1c1a14;color:#ffe08a;border-color:#1c1a14}
+.err{color:#c00;font-size:13px;font-weight:600;margin-top:8px}
+.btn-pay{width:100%;border:none;cursor:pointer;background:linear-gradient(180deg,#22c55e,#15803d);color:#fff;font-weight:800;font-size:17px;border-radius:16px;padding:17px;margin-top:16px;box-shadow:0 12px 28px rgba(22,163,74,.35);transition:.2s}
+.btn-pay:hover{transform:translateY(-2px)}.btn-pay:active{transform:scale(.98)}
+.secure{display:flex;justify-content:center;gap:14px;margin-top:12px;font-size:11.5px;color:var(--mut);font-weight:600;flex-wrap:wrap}
+.timer{display:inline-block;background:#fef2f2;border:1.5px solid #f87171;color:#b91c1c;font-weight:800;border-radius:100px;padding:7px 16px;font-size:13px;margin:0 auto;animation:tpulse 2s infinite}
+@keyframes tpulse{50%{box-shadow:0 0 0 6px rgba(248,113,113,.15)}}
+.one{text-align:center;font-size:12px;color:var(--mut);margin-top:10px;font-weight:600}
+.qrbox{background:#fff;border:2px dashed #e8b93c;border-radius:18px;min-height:280px;display:grid;place-items:center;margin:14px 0;padding:16px}
+.qrbox img{width:240px;height:240px}
+.spin{width:40px;height:40px;border:5px solid #e8e0cc;border-top-color:var(--gold);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.codebox{background:#1c1a14;color:#ffe08a;border-radius:14px;padding:14px;font-size:11px;word-break:break-all;max-height:110px;overflow:auto;font-family:ui-monospace,monospace}
+.btn-copy{width:100%;border:2px solid #1c1a14;background:#fff;border-radius:14px;padding:14px;font-weight:800;cursor:pointer;margin-top:10px;font-size:15px}
+.btn-line2{display:block;text-align:center;border:1px solid var(--line);border-radius:14px;padding:13px;margin-top:10px;font-weight:700;text-decoration:none;color:var(--ink);font-size:14px;background:#fff}
+.status{text-align:center;font-weight:700;font-size:14px;margin-top:12px;color:#8a6d1c}
+.ok{text-align:center;padding:10px 0}
+.ok .big{font-size:56px;animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(.5)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.ok h2{font-size:24px;margin:8px 0 4px}
+.share2{display:flex;gap:8px;margin-top:14px}
+.share2 a,.share2 button{flex:1;border:none;border-radius:12px;padding:13px;font-weight:800;cursor:pointer;text-decoration:none;text-align:center;font-size:14px}
+.share2 .wa{background:#22c55e;color:#fff}
+.share2 .back{background:#eee7d3;color:var(--ink)}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:18px}
+.hidden{display:none!important}
+.center{text-align:center}
+a{color:var(--green-d)}
+</style>
+</head>
+<body>
+<div class="topbar">🔒 Pagamento <b>100% seguro</b> via PIX • Sem cadastro</div>
+<div class="wrap">
+  <div class="brand"><span class="ic">✝️</span><div><b>LUZ DE JESUS</b><small>necessitados • animais</small></div></div>
+
+  <div class="steps"><div id="st1" class="on">1 • Seus dados</div><div id="st2">2 • Pagamento</div></div>
+
+  <!-- ETAPA 1 -->
+  <div id="step1">
+    <div class="card">
+      <div class="prod"><img class="em-img" id="pImg" alt="causa"><div><b id="pTitle">Doação — Ambas as causas</b><br><small>Doação única • PIX • Comprovante na hora</small></div></div>
+      <div class="price"><span>Sua doação <a href="/#doar" id="changeVal">trocar valor</a></span><b id="pValor">R$20,00</b></div>
+      <div class="impact" id="pImpact">💛 Com R$20 você garante 10 marmitas + ração!</div>
+    </div>
+    <div class="card">
+      <div class="causas" id="pCausas">
+        <button data-c="necessitados">🍞 Pessoas</button>
+        <button data-c="animais">🐾 Animais</button>
+        <button data-c="ambos" class="on">💛 Ambos</button>
+      </div>
+      <div class="valrow" id="pVals">
+        <button data-v="2">R$2</button><button data-v="5">R$5</button><button data-v="10">R$10</button>
+        <button data-v="20" class="on">R$20</button><button data-v="50">R$50</button><button data-v="100">R$100</button>
+      </div>
+      <label class="lbl" for="fNome">Seu nome <span style="font-weight:400">(opcional)</span></label>
+      <input class="inp" id="fNome" placeholder="Ex: Maria" maxlength="60" autocomplete="name">
+      <label class="lbl" for="fEmail">Seu e-mail <span style="font-weight:400">(opcional, p/ comprovante)</span></label>
+      <input class="inp" id="fEmail" type="email" placeholder="voce@email.com" maxlength="80" autocomplete="email">
+      <p class="err hidden" id="fErr">Valor mínimo R$ 2,00</p>
+      <button class="btn-pay" id="btnGen">⚡ GERAR PIX AGORA</button>
+      <p class="one">Pagamento único • sem mensalidade 💛</p>
+      <div class="secure"><span>🔒 Dados protegidos</span><span>⚡ Aprova na hora</span><span>🧾 Comprovante</span></div>
+    </div>
+  </div>
+
+  <!-- ETAPA 2 -->
+  <div id="step2" class="hidden">
+    <div class="card center">
+      <span class="timer" id="cTimer">⏳ Expira em 15:00</span>
+      <h2 id="cTitle" style="margin:12px 0 2px">Escaneie o PIX 📱</h2>
+      <p style="color:var(--mut);font-size:13px" id="cResumo"></p>
+      <div class="qrbox"><img id="cQr" class="hidden" alt="QR Code PIX"><div id="cSpin" class="spin"></div></div>
+      <p class="status" id="cStatus">Gerando seu PIX...</p>
+    </div>
+    <div class="card">
+      <label class="lbl">PIX copia e cola 👇</label>
+      <div class="codebox" id="cCode">gerando...</div>
+      <button class="btn-copy" id="cCopy">📋 Copiar código PIX</button>
+      <a class="btn-line2 hidden" id="cLink" href="#" target="_blank" rel="noopener">Abrir link de pagamento ↗</a>
+      <button class="btn-line2" id="cBack" type="button">← Voltar e alterar</button>
+    </div>
+  </div>
+
+  <!-- SUCESSO -->
+  <div id="stepOk" class="hidden">
+    <div class="card ok">
+      <div class="big">✅</div>
+      <h2>Pagamento recebido!</h2>
+      <p style="color:var(--mut)">Deus te abençoe imensamente 🙏💛<br>Comprovante enviado (se informou e-mail).</p>
+      <div class="share2">
+        <a class="wa" id="cShare" href="#" target="_blank" rel="noopener">📣 Compartilhar</a>
+        <a class="back" href="/">Voltar ao site</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="foot">© 2026 Luz de Jesus • Feito com fé ✝<br><a href="/">← voltar ao site</a></p>
+</div>
+<script src="/checkout.min.js"></script>
+</body>
+</html>

@@ -11,9 +11,13 @@ let valor = (() => {
     const v = parseFloat(String(q).replace(',', '.'));
     if (!isNaN(v) && v > 0) return Math.round(v * 100) / 100;
   }
-  const seg = (location.pathname.split('/').filter(Boolean).pop() || '').replace(',', '.');
-  const v = parseFloat(seg);
-  return !isNaN(v) && v > 0 ? Math.round(v * 100) / 100 : 20;
+  const seg = (location.pathname.split('/').filter(Boolean).pop() || '');
+  const m = seg.match(/^(?:checkout-|doacao-)?(\d+(?:[.,]\d+)?)$/i);
+  if (m) {
+    const v = parseFloat(m[1].replace(',', '.'));
+    if (!isNaN(v) && v > 0) return Math.round(v * 100) / 100;
+  }
+  return 20;
 })();
 let causa = new URLSearchParams(location.search).get('causa') || 'ambos';
 if (!['necessitados', 'animais', 'ambos'].includes(causa)) causa = 'ambos';
@@ -99,18 +103,28 @@ $('#btnGen').onclick = async () => {
   try {
     const r = await fetch('/api/doar', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ amount: valor, causa, nome: nome || 'Anônimo', email, visitorId: window._vid, fbp: getCookie('_fbp'), fbc: getCookie('_fbc'), ...window._utm }) });
     if (!r.ok) throw 0;
-    const d = await r.json();
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || 'Falha ao gerar');
     window._eid = d.eventId || null;
     $('#cSpin').style.display = 'none';
-    const img = $('#cQr'); img.src = d.qrCode || ''; img.classList.remove('hidden');
+    const img = $('#cQr');
+    if (d.qrCode) {
+      img.onerror = () => { img.classList.add('hidden'); toast('⚠️ QR não carregou — use o código ou o link abaixo.'); };
+      img.src = d.qrCode; img.classList.remove('hidden');
+    } else {
+      img.classList.add('hidden');
+    }
     $('#cCode').textContent = d.code || '—';
     if (d.paymentLink) { const l = $('#cLink'); l.href = d.paymentLink; l.classList.remove('hidden'); }
-    toast(d.demo ? '🧪 Demonstração — PIX real com backend conectado.' : '✅ Abra o app do banco e pague 📱');
+    if (!d.qrCode && d.paymentLink) toast('📲 QR indisponível — abra o link acima pra pagar.');
+    else if (d.demo) toast('🧪 Demonstração — PIX real com backend conectado.');
+    else toast('✅ Abra o app do banco e pague 📱');
     startTimer();
     if (d.id && !d.demo) poll(d.id);
-  } catch {
-    toast('😕 Falha ao gerar. Tente de novo.');
+  } catch (e) {
+    toast('😕 ' + (e && e.message ? e.message : 'Falha ao gerar. Tente de novo.'));
     $('#cSpin').style.display = 'none';
+    $('#cBack').textContent = '← Tentar de novo';
   }
 };
 async function statusOf(id) {
