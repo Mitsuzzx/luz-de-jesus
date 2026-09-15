@@ -35,10 +35,10 @@ fetch('/api/config').then(r => r.json()).then(c => {
 
 function causaInfo(c) {
   return c === 'animais'
-    ? { emoji: '🐾', title: 'Doação — Patas Protegidas' }
+    ? { emoji: '🐾', title: 'Doação — Patas Protegidas', img: 'https://images.unsplash.com/photo-1597852076315-144edc0bd5a6?w=200&q=60&auto=format&fit=crop' }
     : c === 'necessitados'
-      ? { emoji: '🍞', title: 'Doação — Prato Cheio' }
-      : { emoji: '💛', title: 'Doação — Ambas as causas' };
+      ? { emoji: '🍞', title: 'Doação — Prato Cheio', img: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=200&q=60&auto=format&fit=crop' }
+      : { emoji: '💛', title: 'Doação — Ambas as causas', img: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=200&q=60&auto=format&fit=crop' };
 }
 function impactoTxt(v, c) {
   if (c === 'animais') {
@@ -54,7 +54,7 @@ function impactoTxt(v, c) {
 }
 function paint() {
   const info = causaInfo(causa);
-  $('#pEmoji').textContent = info.emoji;
+  $('#pImg').src = info.img;
   $('#pTitle').textContent = info.title;
   $('#pValor').textContent = fmt(valor);
   $('#pImpact').textContent = `💛 Com ${fmt(valor)} você garante ${impactoTxt(valor, causa)}!`;
