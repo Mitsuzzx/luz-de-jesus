@@ -1,0 +1,12 @@
+# Segredos — NUNCA commitar
+.env
+.env.local
+db.json
+
+# Dependências / build
+node_modules/
+.vercel/
+
+# Sistema
+.DS_Store
+Thumbs.db

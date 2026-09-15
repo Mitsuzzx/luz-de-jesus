@@ -1,0 +1,21 @@
+{
+  "name": "maos-de-jesus-doacoes",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Site black de doação para necessitados e animais - PIX via Sharpify, mínimo R$2",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build": "terser script.js --compress --mangle --output script.min.js && echo minificado OK"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "terser": "^5.51.2"
+  }
+}
