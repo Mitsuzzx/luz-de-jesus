@@ -4,8 +4,13 @@ const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const fmt = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-// valor da rota /doacao/30 (aceita 30, 30.5 ou 30,50)
+// valor da rota /doacao/30 (aceita 30, 30.5 ou 30,50) ou ?valor=30
 let valor = (() => {
+  const q = new URLSearchParams(location.search).get('valor');
+  if (q) {
+    const v = parseFloat(String(q).replace(',', '.'));
+    if (!isNaN(v) && v > 0) return Math.round(v * 100) / 100;
+  }
   const seg = (location.pathname.split('/').filter(Boolean).pop() || '').replace(',', '.');
   const v = parseFloat(seg);
   return !isNaN(v) && v > 0 ? Math.round(v * 100) / 100 : 20;

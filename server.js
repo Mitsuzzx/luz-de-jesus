@@ -19,8 +19,12 @@ app.use(express.json());
 // nunca é exposto — nem pelo Sources do F12, nem por URL direta.
 const PUBLIC_FILES = ['index.html', 'style.css', 'script.js', 'script.min.js', 'admin.html', 'checkout.html', 'checkout.js', 'checkout.min.js'];
 PUBLIC_FILES.forEach(f => app.get('/' + f, (req, res) => res.sendFile(path.join(__dirname, 'public', f))));
-// Checkout dedicado estilo Kiwify: /doacao/30?causa=animais
-app.get('/doacao/:valor', (req, res) => res.sendFile(path.join(__dirname, 'public', 'checkout.html')));
+// Checkout dedicado estilo Kiwify: /doacao/30?causa=animais (página física; fallback p/ checkout)
+app.get('/doacao/:valor', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'doacao', String(req.params.valor), 'index.html'), (err) => {
+    if (err) res.sendFile(path.join(__dirname, 'public', 'checkout.html'));
+  });
+});
 
 const {
   SHARPIFY_CLIENT_ID = '',

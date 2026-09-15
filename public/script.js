@@ -153,7 +153,10 @@ function goCheckout() {
   if (valor < MIN) { $('#err').hidden = false; toast('Ops! Mínimo R$ 2,00 💛'); return; }
   if (typeof fbq === 'function') { try { fbq('track', 'InitiateCheckout', { value: valor, currency: 'BRL' }); } catch {} }
   const v = valor % 1 === 0 ? String(valor) : valor.toFixed(2);
-  location.href = `/doacao/${v}?causa=${causa}`;
+  // rota bonita p/ valores padrão (página física), fallback p/ valores livres
+  location.href = [2, 5, 10, 20, 50, 100].includes(valor)
+    ? `/doacao/${v}?causa=${causa}`
+    : `/checkout.html?valor=${v}&causa=${causa}`;
 }
 
 $('#form').addEventListener('submit', e => { e.preventDefault(); goCheckout(); });
