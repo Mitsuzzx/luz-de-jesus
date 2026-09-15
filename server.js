@@ -18,7 +18,7 @@ app.use(express.json());
 // 🔒 Só arquivos PÚBLICOS são servidos. Backend (server.js, /api, /lib, .env)
 // nunca é exposto — nem pelo Sources do F12, nem por URL direta.
 const PUBLIC_FILES = ['index.html', 'style.css', 'script.js', 'script.min.js', 'admin.html'];
-PUBLIC_FILES.forEach(f => app.get('/' + f, (req, res) => res.sendFile(path.join(__dirname, f))));
+PUBLIC_FILES.forEach(f => app.get('/' + f, (req, res) => res.sendFile(path.join(__dirname, 'public', f))));
 
 const {
   SHARPIFY_CLIENT_ID = '',
@@ -185,8 +185,8 @@ app.post('/webhooks/sharpify', async (req, res) => {
   res.sendStatus(200);
 });
 
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public', 'admin.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 app.listen(PORT, async () => {
   console.log(`\n✝ Luz de Jesus: http://localhost:${PORT}`);
