@@ -1,10 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" },
-    { "source": "/doacao/:valor", "destination": "/checkout.html" },
-    { "source": "/api/status/:id", "destination": "/api/status?id=:id" }
+  "routes": [
+    { "src": "^/doacao/[^/]+/?$", "dest": "/checkout.html" },
+    { "src": "^/admin/?$", "dest": "/admin.html" },
+    { "src": "^/api/status/([^/]+)/?$", "dest": "/api/status?id=$1" },
+    { "handle": "filesystem" }
   ],
   "headers": [
     { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
